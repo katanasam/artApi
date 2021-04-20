@@ -1,0 +1,29 @@
+
+- commande de start
+npm init -y
+
+- creation de 2 fichiers 
+touch index.js  .gitignore
+
+- init git 
+git init
+
+- instalation de appolo server et graphql
+npm install apollo-server graphql mongoose
+
+-lnacer le server
+node index
+
+
+--server  mongo il faut dabort se rendre dans le dossier d'instalation
+- server database start
+mongod 
+
+- server client start
+mongo
+
+- instal nodemon redemarre le server automatiquement a chaque modification
+npm i -D nodemon
+
+-- instal encription and json webtoken
+npm install bcryptjs jsonwebtoken

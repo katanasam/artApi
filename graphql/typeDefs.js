@@ -81,7 +81,7 @@ module.exports =  gql`
 
         createComment(post_Id: ID!,body: String!): Comment!
         editComment(comment_Id: ID!,body: String): Comment!
-        deleteComment(comment_Id: ID!): String!
+        deleteComment(comment_Id: ID!, content_id: String!, type: String): String!
 
         likeContent(contentInput: ContentInput!): String!
         unlikeContent(contentInput: ContentInput!): String!

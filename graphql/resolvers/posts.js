@@ -11,20 +11,19 @@ module.exports = {
     Query : {
         async getPosts(){
 
-             // TODO ------------------- trouver les posts et les renvoyer
-
+            // TODO ------------------- trouver les posts et les renvoyer
             try {
                 
                 //! IMPORTANT POPULATE  A object lier a plusieurs autres object aussi lier a d'autre objets
-                //! ------------------------------------------------------
+                //! -------------------------------------------------------------------------------
                 // const posts = await Post.find().populate('user').populate('comments')
 
                 //* dans le post  lorsque tu le trouve et remplies
                 //* le champs user avec les infomations du user {id email username ....}
                 //* le champs comment avec les infomations du comment {id body createdAt  ....}
-                //* -> dans le commentaire que tu vas me ramener remplies moi 
-                //*   -> les infomations du user {id email username ....}
-                //*   -> les infomations du like {id email username ....}
+                //* -> dans le commentaire que tu va me ramener remplies moi 
+                //*   -> les infomations du user {id email username createdAt....}
+                //*   -> les infomations des likes {id email username createdAt....}
 
                 //! NESTED ARRAY
 
@@ -34,12 +33,12 @@ module.exports = {
                     path: 'comments',
                     populate: { 
                         path: 'user' ,
-                        populate: { path: 'likes' }
+                      //  populate: { path: 'likes' }
                     }
                 })
 
-
-                //! IMPORTANT POPULATE  ----------------------------------------------------------
+                //! ---------------------------------------------------------------------------------
+                //! IMPORTANT POPULATE  -------------------------------------------------------------
 
 
                 return posts;

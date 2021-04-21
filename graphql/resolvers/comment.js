@@ -5,6 +5,7 @@ const Post = require('../../models/Post');
 const Comment = require('../../models/comment');
 
 const checkAuth = require ('../../utility/midelware/check-auth');
+const defineContent = require ('../../utility/helpers/content');
 
 
 // validator
@@ -22,7 +23,7 @@ module.exports = {
 
                 const comment = await Comment.find().populate('user')
 
-                console.log('%ccomment', comment);
+                // console.log('%ccomment', comment);
                 
                 return comment;
 
@@ -146,44 +147,68 @@ module.exports = {
        },
 
        //* DELETE POST
-      async deleteComment(parent,{comment_Id},context){
+      async deleteComment(parent,{comment_Id,type,content_id},context){
 
-           // TODO ------------------- récuperation du user
-           const currentUser = checkAuth(context);
+        // TODO ------------------- récuperation du user
+        const currentUser = checkAuth(context);
 
 
-           // TODO ------------------- delete un comment et les renvoyer une confirmation
-           try {
+        // TODO ------------------- delete un comment et les renvoyer une confirmation
+        try {
 
-               const comment = await Comment.findById(comment_Id);
-               
-               if(comment){
-                       if(comment.user == currentUser.id){
+            //! SUPPRIME DANS LE TABLEAUX DES COMMENTAIRES DU CONTENUE 
+            //! le commtaire passser en parametre
+            // il faut suprpimer dans le tableaux du content le commentaire aussi 
+            const content =  await defineContent(content_id, type);
 
-                       let id = comment.id;
-                       
+            // si tu trouve le contenue supprime le commentaires de sont tableau
+            if(content){
+                let indexCom = content.comments.findIndex(c => c.id === comment_Id);
 
-                       const confirmationDelete = await Comment.findOneAndDelete(comment_Id,comment);
+                if(content.comments[indexCom].user._id == currentUser.id){
+                    content.comments.splice(indexCom,1);
+                    
+                    await content.save
 
-                       if(confirmationDelete){
-                           return "comment => ['id':'"+ id +"'] delete avec SUCCESS";
-                       }
+                }else {
+                    throw new Error("le Commentaire et bien present sur le contenue, mais appartient à un autre utilisateur => ACCES REFUSER ! ");
+                }
 
-                   }
-                   else {
-                       throw new Error(" Ce Comment appartient à un autre utilisateur => ACCES REFUSER ! ");
-                   }
-               }
-               else {
+            }
 
-                   throw new Error(" Ce Comment n'existe pas ! ");
+            
+            //! SUPPRIME LE COMMENTAIRES  
+            //! le commtaire passser en parametre
+            
+            const comment = await Comment.findById(comment_Id);
 
-               }
+            if(comment){
+
+                if(comment.user == currentUser.id){
+
+                    let id = comment.id;
+                    
+                   const confirmationDelete = await Comment.findOneAndDelete(comment_Id,comment);
+
+                   if(confirmationDelete){
+                        return "comment => ['id':'"+ id +"'] delete avec SUCCESS du post => ['id':'"+ content._id +"']";
+                    }
+                }
+
+                else {
+                    throw new Error(" Ce Comment appartient à un autre utilisateur => ACCES REFUSER ! ");
+                }
+            }
+            else {
+
+                throw new Error(" Ce Comment n'existe pas ! ");
+
+            }
 
            } catch (error) {
 
-               throw new Error(error);
-           }
+            throw new Error(error);
+        }
 
        }    
    }

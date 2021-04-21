@@ -15,7 +15,13 @@ const commentSchema = new Schema({
         }
     ],
 
-    likes : [ { type: Schema.Types.ObjectId, ref: 'Like' } ],
+
+    likes: [
+        {
+            username: String,
+            createdAt: String
+        }
+    ],
 
     user: { type: Schema.Types.ObjectId, ref: 'User' }
 })

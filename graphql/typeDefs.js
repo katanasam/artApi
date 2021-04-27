@@ -70,12 +70,20 @@ module.exports =  gql`
         getComments: [Comment]
         getComment(comment_Id: ID!): Comment
 
+
+        # user getUserPosts
+        # user getUserComments
+        # user getUserAllPost
+
     }
     
     type Mutation {
 
         register(registerInput: RegisterInput): User!
         login(email: String! , password: String!): User!
+
+        # user informations suplementaire
+
 
         createPost(body: String!): Post!
         editPost(post_Id: ID!,body: String): Post!
@@ -85,6 +93,7 @@ module.exports =  gql`
         createComment(post_Id: ID!,body: String!): Comment!
         editComment(comment_Id: ID!,body: String): Comment!
         deleteComment(comment_Id: ID!, content_id: String!, type: String): String!
+        
         # reponseComment()
         # deleteComment()
 

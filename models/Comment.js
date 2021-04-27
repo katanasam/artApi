@@ -15,16 +15,8 @@ const commentSchema = new Schema({
         }
     ],
 
-
-    likes: [
-        {
-            username: String,
-            createdAt: String
-        }
-    ],
-
+    likes : [ { type: Schema.Types.ObjectId, ref: 'Like' } ],
     user: { type: Schema.Types.ObjectId, ref: 'User' }
 })
 
 module.exports = model('Comment', commentSchema);
-

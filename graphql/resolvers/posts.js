@@ -33,7 +33,14 @@ module.exports = {
                     path: 'comments',
                     populate: { 
                         path: 'user' ,
-                      //  populate: { path: 'likes' }
+                      
+                    }
+                })
+                .populate({
+                    path: 'likes',
+                    populate: { 
+                        path: 'user' ,
+                      
                     }
                 })
 
@@ -83,6 +90,11 @@ module.exports = {
             // TODO  ------------------- récuperation du user
             const currentUser = checkAuth(context);
 
+            //TODO securité du contenue
+            if(body.trim() === ''){
+                throw new Error(" Le body ne peut pas etre vide! ");
+            }
+
             console.log(currentUser)
 
             // TODO ------------------- creer un posts et les renvoyer une confirmation
@@ -99,7 +111,13 @@ module.exports = {
              // recupération du post et de la request
              const post = await newPost.save();
 
-             return post;
+             //! notification
+             // on envoie le post juste save 
+             context.pubSub.publish('NEW_POST',{
+                 newPost: post
+             })
+
+            return post;
 
            
         },
@@ -109,6 +127,10 @@ module.exports = {
 
             // TODO ------------------- récuperation du user
             const currentUser = checkAuth(context);
+
+            if(body.trim() === ''){
+                throw new Error(" Le body ne peut pas etre vide! ");
+            }
 
                 // TODO ------------------- trouver les posts et les renvoyer
                 try {
@@ -190,5 +212,12 @@ module.exports = {
             }
 
         }    
+    },
+
+    Subscription: {
+        newPost: {
+            // LISTENNER
+            subscribe: (_,__,{pubSub}) => pubSub.asyncIterator('NEW_POST')
+        }
     }
 }

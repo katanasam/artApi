@@ -1,7 +1,7 @@
 const Post = require('../../models/Post');
 const Comment = require('../../models/comment');
 
-module.exports = async function defineContent(content_id, type){
+module.exports =  function createDirectoryUser(content_id, type){
 
     switch (type) {
 
@@ -36,4 +36,17 @@ module.exports = async function defineContent(content_id, type){
         default:
         console.log(`Sorry, ERROR `);
     }
+}
+
+module.exports =  function deleteFile(content_id, type){
+
+}
+
+
+module.exports =  function nameFile(content_id, type){
+
+}
+
+module.exports =  function getDirectory(content_id, type){
+
 }

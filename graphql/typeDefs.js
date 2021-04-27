@@ -15,6 +15,8 @@ module.exports =  gql`
         user: User
         comments: [Comment]!
         likes: [Like]!
+        numberOfComments: Int
+        numberOfLikes: Int
     }
 
     type Comment {
@@ -58,7 +60,7 @@ module.exports =  gql`
 
     input ContentInput{
         type: String!
-        contendId: String! 
+        content_Id: String! 
     }
 
     type Query {
@@ -78,13 +80,26 @@ module.exports =  gql`
         createPost(body: String!): Post!
         editPost(post_Id: ID!,body: String): Post!
         deletePost(post_Id: ID!): String!
+        # addImageToContent
 
         createComment(post_Id: ID!,body: String!): Comment!
         editComment(comment_Id: ID!,body: String): Comment!
         deleteComment(comment_Id: ID!, content_id: String!, type: String): String!
+        # reponseComment()
+        # deleteComment()
 
-        likeContent(contentInput: ContentInput!): String!
-        unlikeContent(contentInput: ContentInput!): String!
+
+
+        likeContent(content_Id: ID!, type: String!): String 
+        
+        # follow(content_Id: ID!, type: String!): String 
+        # friends(content_Id: ID!, type: String!): String 
+
+    }
+
+    type Subscription {
+        # A chaque fois qu 'un post sera creer on avertie les gens qui like ou subcribe au post
+        newPost: Post!
 
     }
 `;

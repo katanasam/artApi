@@ -119,7 +119,8 @@ module.exports = {
 
                            const editComment = {
                                 comment,
-                               body: body
+                               body: body,
+                               updateAt : new Date().toISOString(),
                            }
                            
                            // si le post existe delete le

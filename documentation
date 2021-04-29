@@ -25,5 +25,40 @@ mongo
 - instal nodemon redemarre le server automatiquement a chaque modification
 npm i -D nodemon
 
+configure package.json 
+use  npm run serve 
+use  npm start 
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "serve": "node index",
+    "start": "nodemon index"
+  },
+
+
+
+
+
 -- instal encription and json webtoken
 npm install bcryptjs jsonwebtoken
+
+[server partie 1]
+
+npm install apollo-server graphql mongoose
+npm install bcryptjs jsonwebtoken
+npm i -D nodemon
+
+
+[client partie 2]
+npx create-react-app client-art
+npm install @apollo/react-hooks
+npm install apollo-cache-inmemory --save
+npm install @apollo/client 
+npm install apollo-link-http
+
+npm install @apollo/react-hooks apollo-cache-inmemory  apollo-client  apollo-link-http
+npm install react-router-dom
+npm install semantic-ui-react  semantic-ui-css
+
+npm install graphql graphql-tag
+npm install moment

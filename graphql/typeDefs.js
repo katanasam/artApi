@@ -83,6 +83,8 @@ module.exports =  gql`
         login(email: String! , password: String!): User!
 
         # user informations suplementaire
+        # modifier les information user
+        # mot de passe perdu 
 
 
         createPost(body: String!): Post!

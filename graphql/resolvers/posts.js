@@ -47,7 +47,6 @@ module.exports = {
                 //! ---------------------------------------------------------------------------------
                 //! IMPORTANT POPULATE  -------------------------------------------------------------
 
-
                 return posts;
 
             } catch(err){
@@ -143,7 +142,8 @@ module.exports = {
 
                             const editPost = {
                                 post,
-                                body: body
+                                body: body,
+                                updateAt : new Date().toISOString(),
                             }
                             
                             // si le post existe delete le

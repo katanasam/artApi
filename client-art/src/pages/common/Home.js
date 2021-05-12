@@ -6,37 +6,46 @@ import gql from 'graphql-tag'
 import { Grid } from 'semantic-ui-react'
 import PostCard from '../../components/PostCart';
 
+//! TEST Dune autre card
+
 //* components
 
 
 function Home() {
     //! recuperation du retour de la requete ou query
     //* useQuery renvoie loading et data
-    // ici o n destrure data 
-    const {loading, 
-        data: {getPosts: posts} } = useQuery(FETCH_POST_QUERY);
+    // ici o n destrure data  null ou undifined
+    const { loading, data } = useQuery(FETCH_POST_QUERY);
+
+
+    // probleme  avec data 
+    var  posts = ''
 
     //* si on récupere des données
-    if(posts){
-        console.log(posts)
+    if(data && data !== undefined ){
+
+         posts = data.getPosts 
+    }else{
+        console.log('undifinnnnnnned')
     }
 
     return (
         <Grid columns={3} divided>
-        <Grid.Row>
+        <Grid.Row className="page-title">
             <h1> Recent Posts </h1>
         </Grid.Row>
         <Grid.Row>
-            {/*  si les donnes sont en chargement  */}
             {loading ? (
                 <h1> Loading Posts .. </h1>
             ): (
-            posts && posts.map((post) => (
+            posts && 
+            posts !== undefined &&
+            posts.map((post) => (
                 
                 /* utilisation du composant post  */
                 /* envoie du post en props */
                 
-                <Grid.Column Key={post.id} style={{marginBottom:20}} className='nos'>
+                <Grid.Column key={post.id} style={{marginBottom:20}} className='nos'>
                     <PostCard post={post} />
                 </Grid.Column>
 
@@ -60,22 +69,22 @@ const FETCH_POST_QUERY = gql `
         updateAt
         numberOfComments
         numberOfLikes
-        # likes{
-        #     id
-        #     user {
-        #         id
-        #         email
-        #     }
-        # }
-        # comments {
-        #     id
-        #     body
-        #     createdAt
-        #     user {
-        #         id
-        #         email
-        #     }
-        # }
+        likes{
+            id
+            user {
+                id
+                email
+            }
+        }
+        comments {
+            id
+            body
+            createdAt
+            user {
+                id
+                email
+            }
+        }
     }
 }
 `

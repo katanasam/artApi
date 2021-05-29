@@ -5,6 +5,7 @@ import {Form, Button} from 'semantic-ui-react';
 import gql from 'graphql-tag'
 import { useMutation } from "@apollo/react-hooks"
 
+import {useForm} from '../../util/hooks'
 
 
 function Register(props) {
@@ -12,33 +13,26 @@ function Register(props) {
     const [errors, setErrors] = useState({});
 
     //! objets values contient les valeurs à envoyer l'api
-    const [values, setValues] = useState({
+    const initialState ={
         username: '',
         email: '',
         password: '',
         Cpassword: ''
 
-    })
-
-    //! si la valuer d'un chanps change alors (set) une  nouvelle value dans lobjet values
-    const onValueChange = (event) => {
-
-        setValues({ ...values, [event.target.name]: event.target.value }); 
     }
+
+    const {onSubmitForm, onValueChange , values} = useForm(registerUser, initialState)
+    
 
     const [addUser,{loading} ] = useMutation(REGISTER_USER , {
 
         update(proxy, result){
-
-            console.log(result);
 
             //redirige sur la page home
             props.history.push('/')
             
         },
         onError(err){
-
-            console.log(err.graphQLErrors[0].extensions.exception.errors);
             setErrors(err.graphQLErrors[0].extensions.errors);
         },
 
@@ -46,15 +40,12 @@ function Register(props) {
         variables: values
 
     })
-    
-    const onSubmitForm = (event)=> {
 
-        event.preventDefault();
-        
-        console.log(event.target )
-        addUser();
 
+    function registerUser(){
+        addUser()
     }
+
 
     return (
 

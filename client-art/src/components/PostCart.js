@@ -3,7 +3,7 @@ import { Icon ,Label ,Button, Card, Image } from 'semantic-ui-react'
 
 // pour le temps conversion des string createAt en temps
 import moment from 'moment'
-import { left } from '@popperjs/core';
+//import { left } from '@popperjs/core';
 
 //! il recevrat un post en parametres
 function PostCard({ post: { id, body, username ,createdAt, updateAt, numberOfLikes, numberOfComments ,likes }}){
@@ -31,7 +31,7 @@ function PostCard({ post: { id, body, username ,createdAt, updateAt, numberOfLik
         </Card.Content>
 
         <Card.Content extra>
-        <Button as="div" LabelPosition='right' basic onClick={likePost}>
+        <Button as="div" labelposition='right' basic onClick={likePost}>
           <Button size='mini' color="teal" basic >
             <Icon name='heart' /> like
           </Button>
@@ -42,7 +42,7 @@ function PostCard({ post: { id, body, username ,createdAt, updateAt, numberOfLik
 
         </Button>
 
-          <Button  as="div" LabelPosition='right' basic onClick={CommentOnPost}>
+          <Button  as="div" labelposition='right' basic onClick={CommentOnPost}>
             <Button clas="bkg-btn " size='mini' color="blue" basic>
               <Icon name="comments"/> Coms
             </Button>
